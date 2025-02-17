@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sidebar Menu</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="d-flex">
+    <!-- Sidebar -->
+    <div class="bg-light border-end  p-3" style="width: 150px;">
+        <h4>Menu</h4>
+        <ul class="nav flex-column">
+            <li class="nav-item"><a th:href="@{/admin/chi-tiet-san-pham}" class="nav-link">CHi tiết sản phẩm</a></li>
+            <li class="nav-item"><a th:href="@{/admin/dong-san-pham}" class="nav-link">Dong San Pham</a></li>
+            <li class="nav-item"><a th:href="@{/admin/mau-sac}" class="nav-link">Mau sac</a></li>
+            <li class="nav-item"><a th:href="@{/admin/nsx}" class="nav-link">NSX</a></li>
+            <li class="nav-item"><a th:href="@{/admin/san-pham}" class="nav-link">San pham</a></li>
+            <li class="nav-item"><a th:href="@{/admin/khach-hang}" class="nav-link">Khach hang</a></li>
+            <li class="nav-item"><a th:href="@{/admin/cua-hang}" class="nav-link">Cua Hang</a></li>
+            <li class="nav-item"><a th:href="@{/admin/nhan-vien}" class="nav-link">Nhan Vien</a></li>
+            <li class="nav-item"><a th:href="@{/admin/chuc-vu}" class="nav-link">Chuc vu</a></li>
+        </ul>
+    </div>
+
+    <!-- Nội dung chính -->
+    <div class="p-4 flex-grow-1">
+        <form action="/chi-tiet-san-pham/update" method="post">
+            <input type="hidden" name="id" th:value="${id}">
+            <div class="mb-3">
+                <label class="form-label">Sản phẩm</label>
+                <select name="sp" class="form-select">
+                    <option th:each="sp : ${sp}" th:value="${sp.id}" th:text="${sp.ten}" th:selected="${dt != null and dt.sp != null and sp.id == dt.sp.id}"></option>
+                    <!-- Dữ liệu từ database -->
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label  class="form-label">Nhà sản xuất</label>
+                <select name="nsx" class="form-select">
+                    <option th:each="nsx : ${nsx}" th:value="${nsx.id}" th:text="${nsx.ten}" th:selected="${dt != null and dt.nsx != null and nsx.id == dt.nsx.id}"></option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Màu sắc</label>
+                <select name="mauSac" class="form-select">
+                    <option th:each="ms : ${ms}" th:value="${ms.id}" th:text="${ms.ten}" th:selected="${dt != null and dt.mauSac != null and ms.id == dt.mauSac.id}"></option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Dòng sản phẩm</label>
+                <select name="dongSP" class="form-select">
+                    <option th:each="dsp : ${dsp}" th:value="${dsp.id}" th:text="${dsp.ten}" th:selected="${dt != null and dt.dongSP != null and dsp.id == dt.dongSP.id}"></option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Năm bảo hành</label>
+                <input type="number" name="namBH" class="form-control" th:value="${dt != null ? dt.namBH : ''}" >
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Mô tả</label>
+                <textarea name="moTa" class="form-control" th:text="${dt != null ? dt.moTa : ''}" rows="3"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Số lượng tồn</label>
+                <input type="number" name="soLuongTon" class="form-control" th:value="${dt != null ? dt.soLuongTon : ''}">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Giá nhập</label>
+                <input type="number" name="giaNhap" class="form-control" th:value="${dt != null ? dt.giaNhap : ''}">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Giá bán</label>
+                <input type="number" name="giaBan" class="form-control" th:value="${dt != null ? dt.giaBan : ''}">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">ten san pham</th>
+                <th scope="col">ten NSX</th>
+                <th scope="col">mau sac</th>
+                <th scope="col">dong sp</th>
+                <th scope="col">nam BH</th>
+                <th scope="col">mo ta</th>
+                <th scope="col">so luong ton</th>
+                <th scope="col">gia nhap</th>
+                <th scope="col">gia ban</th>
+                <th scope="col">Action</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="list : ${list}">
+                <td th:text="${list.id}"></td>
+                <td th:text="${list.sp.ten}"></td>
+                <td th:text="${list.nsx.ten}"></td>
+                <td th:text="${list.mauSac.ten}"></td>
+                <td th:text="${list.dongSP.ten}"></td>
+                <td th:text="${list.namBH}"></td>
+                <td th:text="${list.moTa}"></td>
+                <td th:text="${list.soLuongTon}"></td>
+                <td th:text="${list.giaNhap}"></td>
+                <td th:text="${list.giaBan}"></td>
+                <td>
+                    <button type="button" class="btn btn-danger ">
+                        <a th:href="@{/admin/chi-tiet-san-pham/delete/{id}(id=${list.id})}" style="text-decoration: none;" class="text-light">Xoa</a>
+                    </button>
+
+                    <button type="button" class="btn btn-secondary link-offset-2 link-underline link-underline-opacity-0">
+                        <a th:href="@{/admin/chi-tiet-san-pham/{id1}(id1=${list.id})}" style="text-decoration: none;" class="text-light">Details</a>
+                    </button>
+
+                    <button type="button" class="btn btn-success link-offset-2 link-underline link-underline-opacity-0" >
+                        <a th:href="@{/admin/chi-tiet-san-pham}" style="text-decoration: none;" class="text-light">view-add</a>
+                    </button>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

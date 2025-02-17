@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sidebar Menu</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="d-flex">
+    <!-- Sidebar -->
+    <div class="bg-light border-end vh-100 p-3" style="width: 250px;">
+        <h4>Menu</h4>
+        <ul class="nav flex-column">
+            <li class="nav-item"><a th:href="@{/admin/chi-tiet-san-pham}" class="nav-link">Chi tiet san pham</a></li>
+            <li class="nav-item"><a th:href="@{/admin/dong-san-pham}" class="nav-link">Dong san pham</a></li>
+            <li class="nav-item"><a th:href="@{/admin/mau-sac}" class="nav-link">Mau sac</a></li>
+            <li class="nav-item"><a th:href="@{/admin/nsx}" class="nav-link">NSX</a></li>
+            <li class="nav-item"><a th:href="@{/admin/san-pham}" class="nav-link">San pham</a></li>
+            <li class="nav-item"><a th:href="@{/admin/khach-hang}" class="nav-link">Khach hang</a></li>
+            <li class="nav-item"><a th:href="@{/admin/cua-hang}" class="nav-link">Cua Hang</a></li>
+            <li class="nav-item"><a th:href="@{/admin/nhan-vien}" class="nav-link">Nhan Vien</a></li>
+            <li class="nav-item"><a th:href="@{/admin/chuc-vu}" class="nav-link">Chuc vu</a></li>
+        </ul>
+    </div>
+
+    <!-- Nội dung chính -->
+    <div class="p-4 flex-grow-1">
+    <form action="/admin/chuc-vu/add" method="post">
+        <div class="mb-3">
+            <label class="form-label">Mã</label>
+            <input type=text name="ma" class="form-control" th:value="${dt != null ? dt.ma : ''}" >
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Tên</label>
+            <input type="text" name="ten" class="form-control" th:value="${dt != null ? dt.ten : ''}" >
+        </div>
+        <button type="submit" class="btn btn-primary">Lưu</button>
+
+    </form>
+    <div class="p-4 flex-grow-1">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">ma</th>
+                <th scope="col">ten</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="list : ${list}">
+                <td th:text="${list.id}"></td>
+                <td th:text="${list.ma}"></td>
+                <td th:text="${list.ten}"></td>
+                <td>
+                    <button type="button" class="btn btn-danger ">
+                        <a th:href="@{/admin/chuc-vu/delete/{id}(id=${list.id})}" style="text-decoration: none;" class="text-light">Xoa</a>
+                    </button>
+
+                    <button type="button" class="btn btn-secondary link-offset-2 link-underline link-underline-opacity-0">
+                        <a th:href="@{/admin/chuc-vu/{id1}(id1=${list.id})}" style="text-decoration: none;" class="text-light">Details</a>
+                    </button>
+
+                    <button type="button" class="btn btn-success link-offset-2 link-underline link-underline-opacity-0" >
+                        <a th:href="@{/admin/chuc-vu/view-update/{id2}(id2=${list.id})}" style="text-decoration: none;" class="text-light">view-update</a>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+</body>
+</html>
